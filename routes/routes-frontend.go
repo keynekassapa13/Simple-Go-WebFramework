@@ -11,20 +11,26 @@ import (
   "github.com/gorilla/mux"
 )
 
+var frontend_routes map[string]string
+
 func FrontEndRoutes(r *mux.Router) {
+  frontend_routes = map[string]string{
+    "/": "index.html",
+    "/index": "index.html",
+    "/login": "auth/login.html",
+  }
   r.PathPrefix("/").HandlerFunc(serveTemplate)
 }
 
 func serveTemplate(res http.ResponseWriter, req *http.Request) {
   fmt.Println("[", req.Method, "] frontend url", req.URL.Path)
   lp := filepath.Join("templates", "layout.html")
-  var fp string
-  
-  if req.URL.Path == "/" {
-    fp = filepath.Join("templates", filepath.Clean("index.html"))
-  } else {
-    fp = filepath.Join("templates", filepath.Clean(req.URL.Path + ".html"))
-  }
+  fp := filepath.Join(
+    "templates",
+    filepath.Clean(
+      frontend_routes[req.URL.Path],
+    ),
+  )
 
   // Return a 404 if the template doesn't exist
   info, err := os.Stat(fp)
