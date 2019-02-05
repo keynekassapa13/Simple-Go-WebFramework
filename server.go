@@ -6,6 +6,7 @@ import(
   "time"
   "flag"
   "net/http"
+  "encoding/json"
 
   "github.com/gorilla/mux"
 
@@ -42,4 +43,13 @@ func declareRoutes(r *mux.Router) {
 
   routes.BackEndRoutes(r)
   routes.FrontEndRoutes(r)
+
+  r.NotFoundHandler = http.HandlerFunc(func (w http.ResponseWriter, req *http.Request) {
+  	w.Header().Set("Content-Type", "application/json; charset=utf-8")
+  	w.WriteHeader(http.StatusNotFound)
+  	json.NewEncoder(w).Encode(map[string]interface{}{
+  		"message": "request not found",
+  	})
+  })
+
 }
