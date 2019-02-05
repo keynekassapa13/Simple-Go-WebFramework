@@ -15,9 +15,10 @@ var frontend_routes map[string]string
 
 func FrontEndRoutes(r *mux.Router) {
   frontend_routes = map[string]string{
-    "/": "index.html",
-    "/index": "index.html",
-    "/login": "auth/login.html",
+    "/"         : "index.html",
+    "/index"    : "index.html",
+    "/login"    : "auth/login.html",
+    "/signup"   : "auth/signup.html",
   }
   r.PathPrefix("/").HandlerFunc(serveTemplate)
 }
