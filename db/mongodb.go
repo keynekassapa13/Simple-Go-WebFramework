@@ -2,22 +2,36 @@ package db
 
 import (
   "fmt"
+  // "log"
+  // "reflect"
 
   "gopkg.in/mgo.v2"
-  // "gopkg.in/mgo.v2/bson"
 )
 
-func DeclareDb() {
+var session, err = mgo.Dial("localhost")
 
-  session, err := mgo.Dial("localhost")
+func DeclareDb() {
   if err != nil {
           panic(err)
   }
   fmt.Println("[ DB ] Database is ready")
-  defer session.Close()
-  session.SetMode(mgo.Monotonic, true)
 
-  addUser(session, &User{"Ale", "+55 53 8116 9639"})
-  addUser(session, &User{"Cla", "+55 53 8402 8510"})
-  getUsers(session)
+  session.SetMode(mgo.Monotonic, true)
+}
+
+func CloseDB() {
+  session.Close()
+}
+
+func removeAll(
+  dbname string,
+  tname string,
+)  {
+  fmt.Println("[ DB ]", "removeAll dbname=", dbname, " tname=", tname)
+  c := session.DB(dbname).C(tname)
+
+  err := c.DropCollection()
+  if err != nil {
+    fmt.Println("[ DB ] removeAll", err)
+  }
 }

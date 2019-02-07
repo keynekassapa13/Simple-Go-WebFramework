@@ -3,29 +3,41 @@ package db
 import (
   "fmt"
   "log"
+  "time"
 
-  "gopkg.in/mgo.v2"
+  // "gopkg.in/mgo.v2"
   "gopkg.in/mgo.v2/bson"
 )
 
 type User struct {
-  Name string
-  Phone string
+  Username string
+  Password string
+  CreatedAt time.Time
 }
 
-func addUser(session *mgo.Session, user *User) {
+func NewUser(u string, p string) User {
+    return User{
+        Username: u,
+        Password: p,
+        CreatedAt: time.Now().Local(),
+    }
+}
+
+func addUser(user User) User {
   fmt.Println("[ DB ]", "addUser ", user)
 	c := session.DB("Auth").C("User")
+
+  user.CreatedAt = time.Now().Local()
 
 	err := c.Insert(user)
 	if err != nil {
 		log.Fatal(err)
 	}
 
+  return user
 }
 
-
-func getUsers(session *mgo.Session) {
+func GetUsers() []User {
   fmt.Println("[ DB ]", "getUsers ")
   c := session.DB("Auth").C("User")
   var users []User
