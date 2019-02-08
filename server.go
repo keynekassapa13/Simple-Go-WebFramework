@@ -9,8 +9,8 @@ import(
   "encoding/json"
 
   "github.com/gorilla/mux"
-
   routes "./routes"
+  db "./db"
 )
 
 func main() {
@@ -20,6 +20,7 @@ func main() {
   r := mux.NewRouter()
 
   declareRoutes(r)
+  db.DeclareDb()
   http.Handle("/", r)
 
   fmt.Println("[ SERVER ] Server is ready at port 9000")
