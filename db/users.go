@@ -4,10 +4,11 @@ import (
   "fmt"
   "log"
   "time"
-  "github.com/rs/xid"
 
-  // "gopkg.in/mgo.v2"
+  "gopkg.in/mgo.v2"
   "gopkg.in/mgo.v2/bson"
+  "github.com/dgrijalva/jwt-go"
+  "github.com/rs/xid"
   "golang.org/x/crypto/bcrypt"
 )
 
@@ -18,8 +19,15 @@ type User struct {
   CreatedAt time.Time `json:"createdat"`
 }
 
+type JwtToken struct {
+    Token string `json:"token"`
+}
+
 func NewUser(u string, p string) User {
-  h, _ := HashPassword(p)
+  h, err := HashPassword(p)
+  if err != nil {
+      fmt.Println(err)
+  }
   return User{
     Id: xid.New(),
     Username: u,
@@ -32,11 +40,25 @@ func AddUser(user User) bool {
   fmt.Println("[ DB ]", "addUser ", user)
 	c := session.DB("Auth").C("User")
 
+  index := mgo.Index{
+		Key:        []string{"username"},
+		Unique:     true,
+		DropDups:   true,
+		Background: true,
+		Sparse:     true,
+	}
+
+  err = c.EnsureIndex(index)
+	if err != nil {
+		fmt.Println(err)
+    return false
+	}
+
   user.CreatedAt = time.Now().Local()
 
 	err := c.Insert(user)
 	if err != nil {
-		log.Fatal(err)
+		fmt.Println(err)
     return false
 	}
 
@@ -59,6 +81,20 @@ func GetUsers() []User {
 func UpdateUser(user User) bool {
   fmt.Println("[ DB ]", "UpdateUser ", user)
   c := session.DB("Auth").C("User")
+
+  index := mgo.Index{
+		Key:        []string{"username"},
+		Unique:     true,
+		DropDups:   true,
+		Background: true,
+		Sparse:     true,
+	}
+
+  err = c.EnsureIndex(index)
+	if err != nil {
+		fmt.Println(err)
+    return false
+	}
 
   err := c.Update(
     bson.M{"username": user.Username},
@@ -91,6 +127,16 @@ func DeleteUser(user User) bool {
   return true
 }
 
+func findUserByUsername(username string) User {
+  fmt.Println("[ DB ]", "findUsers ", username)
+  c := session.DB("Auth").C("User")
+
+  var user User
+  err = c.Find(bson.M{"username": username}).One(&user)
+
+  return user
+}
+
 func HashPassword(password string) (string, error) {
 	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
 	return string(bytes), err
@@ -99,4 +145,23 @@ func HashPassword(password string) (string, error) {
 func CheckPasswordHash(password, hash string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
 	return err == nil
+}
+
+func Login(user User) string {
+  user_auth := findUserByUsername(user.Username)
+  if (CheckPasswordHash(user.Password, user_auth.Password)) {
+    fmt.Println("CheckPasswordHash yes")
+    token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+      "username": user.Username,
+      "password": user.Password,
+    })
+
+    tokenString, err := token.SignedString([]byte("secret"))
+
+    if err != nil {
+        fmt.Println(err)
+    }
+    return tokenString
+  }
+  return ""
 }
