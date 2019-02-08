@@ -1,8 +1,6 @@
 package routes
 
 import (
-  // "fmt"
-
   "github.com/gorilla/mux"
 
 )

@@ -5,12 +5,6 @@ import (
 	"time"
 	"net/http"
 	"encoding/json"
-	// "io/ioutil"
-
-	// "goji.io"
-	// "goji.io/pat"
-	// "github.com/dgrijalva/jwt-go"
-	// "github.com/mitchellh/mapstructure"
 
 	"github.com/rivo/sessions"
 	db "../db"

@@ -2,8 +2,6 @@ package db
 
 import (
   "fmt"
-  // "log"
-  // "reflect"
 
   "gopkg.in/mgo.v2"
 )
