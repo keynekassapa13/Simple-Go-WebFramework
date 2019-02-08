@@ -35,7 +35,7 @@ func AddUser(res http.ResponseWriter, req *http.Request) {
 	if err != nil {
 		fmt.Println(err)
 	}
-
+	
 	result := db.AddUser(db.NewUser(user.Username, user.Password))
 
 	if (result) {

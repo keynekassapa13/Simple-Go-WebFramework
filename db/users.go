@@ -48,7 +48,7 @@ func GetUsers() []User {
   c := session.DB("Auth").C("User")
   var users []User
 
-  err := c.Find(bson.M{}).Sort("createdat").All(&users)
+  err := c.Find(bson.M{}).Sort("createdat").Select(bson.M{"username": 1, "_id": 1, "createdat": 1}).All(&users)
   if err != nil {
     log.Fatal(err)
   }
