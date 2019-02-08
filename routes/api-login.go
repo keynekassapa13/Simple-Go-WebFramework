@@ -5,24 +5,12 @@ import (
 	"net/http"
 	"encoding/json"
 
+	// "goji.io"
+	// "goji.io/pat"
+
 	db "../db"
 )
 
-func ErrorWithJSON(w http.ResponseWriter, message string, code int) {
-	w.Header().Set("Content-Type", "application/json; charset=utf-8")
-	w.WriteHeader(code)
-	fmt.Fprintf(w, "{message: %q}", message)
-}
-
-func ResponseWithJSON(w http.ResponseWriter, json []byte, code int) {
-	w.Header().Set("Content-Type", "application/json; charset=utf-8")
-	w.WriteHeader(code)
-	w.Write(json)
-}
-
-func Hello(res http.ResponseWriter, req *http.Request) {
-	fmt.Println("[", req.Method, "] backend url", req.URL.Path)
-}
 
 func GetUsers(res http.ResponseWriter, req *http.Request) {
 
@@ -36,4 +24,61 @@ func GetUsers(res http.ResponseWriter, req *http.Request) {
 	}
 
 	ResponseWithJSON(res, respBody, http.StatusOK)
+}
+
+func AddUser(res http.ResponseWriter, req *http.Request) {
+
+	fmt.Println("[", req.Method, "] backend url", req.URL.Path)
+	user := db.User{}
+
+	err := json.NewDecoder(req.Body).Decode(&user)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	result := db.AddUser(db.NewUser(user.Username, user.Password))
+
+	if (result) {
+		ResponseWithJSON(res, []byte(`{"Result": "OK"}`), http.StatusOK)
+	} else {
+		ResponseWithJSON(res, []byte(`{"Result": "Error"}`), http.StatusOK)
+	}
+}
+
+func UpdateUser(res http.ResponseWriter, req *http.Request) {
+	fmt.Println("[", req.Method, "] backend url", req.URL.Path)
+
+	user := db.User{}
+
+	err := json.NewDecoder(req.Body).Decode(&user)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	result := db.UpdateUser(user)
+
+	if (result) {
+		ResponseWithJSON(res, []byte(`{"Result": "OK"}`), http.StatusOK)
+	} else {
+		ResponseWithJSON(res, []byte(`{"Result": "Error"}`), http.StatusOK)
+	}
+}
+
+func DeleteUser(res http.ResponseWriter, req *http.Request) {
+	fmt.Println("[", req.Method, "] backend url", req.URL.Path)
+
+	user := db.User{}
+
+	err := json.NewDecoder(req.Body).Decode(&user)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	result := db.DeleteUser(user)
+
+	if (result) {
+		ResponseWithJSON(res, []byte(`{"Result": "OK"}`), http.StatusOK)
+	} else {
+		ResponseWithJSON(res, []byte(`{"Result": "Error"}`), http.StatusOK)
+	}
 }
