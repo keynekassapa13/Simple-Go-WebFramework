@@ -16,5 +16,5 @@ func BackEndRoutes(r *mux.Router) {
   r.HandleFunc("/backend/updateUser", UpdateUser)
   r.HandleFunc("/backend/deleteUser", DeleteUser)
   r.HandleFunc("/backend/login", Login)
-  r.HandleFunc("/backend/isLoggedIn", IsLoggedIn)
+  r.HandleFunc("/backend/logout", Logout)
 }

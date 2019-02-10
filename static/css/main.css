@@ -36,6 +36,68 @@
 .pre-white-space { white-space:pre }
 .zero-opacity { opacity: 0}
 
+.color-white {color: white;}
+.petite-caps {font-variant: all-petite-caps}
+
+.btn-custom-1 {
+  width: 100%;
+  background: #c51f5d;
+  color: white;
+}
+
+.btn-custom-1:hover {
+  background: rgba(197, 31, 93, 0.8);
+  color: white;
+}
+
+.input-custom-1 {
+  background: inherit !important;
+}
+
+.form-control:focus {
+  box-shadow: 0 0 0 0;
+  border-color: inherit;
+  color: white;
+}
+
+.form-control {
+  color: white;
+}
+
+.loader-window {
+  background: rgba(20,29,38, 0.8);
+  width: 100% !important;
+  height: 100% !important;
+  position: fixed;
+  z-index: 1;
+}
+
+.loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #c51f5d;
+  top: 50%;
+  left: 50%;
+  margin-top: -60px;
+  margin-left: -60px;
+  position: relative;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 /* ------------------------------- Index Page ------------------------------ */
 
 .child-center {
@@ -44,15 +106,17 @@
   left: 50%;
   transform: translate(-50%, -50%);
   padding-bottom: 5%;
-  text-align: center;
 }
 
 .index .col-md-6 {
   text-align: center;
 }
 
-.index .title {
+.index .title,
+.signup .title,
+.login .title {
   border-bottom: 3px solid #c51f5d;
+  line-height: 150%;
 }
 
 .index .col-md-6 a {
@@ -74,6 +138,15 @@
   text-decoration: none;
   color: #c51f5d;
 }
+
+/* --------------------------- Login & Signup Page -------------------------- */
+
+.signup,
+.login {
+  width: 35%;
+}
+
+
 
 body {
   height: 100% !important;

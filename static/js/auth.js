@@ -1,5 +1,5 @@
 $(document).ready(function() {
-
+  
   $('#LoginSubmit').click(function(event) {
     event.preventDefault();
 
@@ -7,6 +7,7 @@ $(document).ready(function() {
       "username": $('#InputUsername').val(),
       "password": $('#InputPassword').val()
     }
+    addLoader();
 
     fetch( URL + '/backend/login', {
       method: "POST",
@@ -19,43 +20,34 @@ $(document).ready(function() {
     .then(function(response) {
       return response.json();
     })
-    .then(function(result) {
-      console.log(result);
-      if (result == "OK") {
-
-      } else {
-
-      }
-    });
-  })
-
-  $('#TestSubmit').click(function(event) {
-    event.preventDefault();
-
-    fetch( URL + '/backend/isLoggedIn', {
-      method: "GET"
-    })
     .then(function(response) {
-      return response.json();
-    })
-    .then(function(result) {
-      console.log(result);
-      if (result == "OK") {
-
+      stopLoader();
+      if (response["Result"] == "OK") {
+        // redirect
       } else {
-
+        displayPopUp('Please try different username');
       }
     });
-
   })
 
   $('#SignUpSubmit').click(function(event) {
     event.preventDefault();
 
+    if ($('#InputUsername').val() == "") {
+      displayPopUp("Username is required");
+      return false;
+    }
+
+    if ($('#InputPassword').val() == "") {
+      displayPopUp("Password is required");
+      return false;
+    }
+
     data = {
       "username": $('#InputUsername').val(),
       "password": $('#InputPassword').val()
     }
+    addLoader();
 
     fetch( URL + '/backend/addUser', {
       method: "POST",
@@ -68,12 +60,12 @@ $(document).ready(function() {
     .then(function(response) {
       return response.json();
     })
-    .then(function(result) {
-      console.log(result);
-      if (result == "OK") {
-
+    .then(function(response) {
+      stopLoader();
+      if (response["Result"] == "OK") {
+        $('.alert').fadeIn();
       } else {
-
+        displayPopUp('Please try different username');
       }
     });
 

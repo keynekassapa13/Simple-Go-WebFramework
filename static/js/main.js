@@ -17,3 +17,25 @@ function handleError(jqXHR) {
       alert('Uncaught Error.\n' + jqXHR.responseText);
   }
 }
+
+function addLoader() {
+  $('#LoaderWindow').addClass('loader-window');
+  $('#Loader').addClass('loader');
+}
+
+function stopLoader() {
+  $('#LoaderWindow').removeClass('loader-window');
+  $('#Loader').removeClass('loader');
+}
+
+function displayPopUp(content) {
+  $.confirm({
+    title: 'Error!',
+    closeIcon: true,
+    content: content,
+    theme: 'supervan',
+    buttons: {
+      Ok: function () {}
+    }
+  });
+}

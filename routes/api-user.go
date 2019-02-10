@@ -10,6 +10,7 @@ import (
 	db "../db"
 )
 
+var s *sessions.Session
 
 func GetUsers(res http.ResponseWriter, req *http.Request) {
 
@@ -84,7 +85,7 @@ func DeleteUser(res http.ResponseWriter, req *http.Request) {
 
 func Login(res http.ResponseWriter, req *http.Request) {
 	fmt.Println("[", req.Method, "] backend url", req.URL.Path)
-	s, _ := sessions.Start(res, req, true)
+	s, _ = sessions.Start(res, req, true)
 
 	user := db.User{}
 
@@ -100,7 +101,8 @@ func Login(res http.ResponseWriter, req *http.Request) {
 		http.SetCookie(res, &http.Cookie{
 			Name:    "session_token",
 			Value:   result,
-			Expires: time.Now().Add(12000 * time.Second),
+			Path:  "/",
+			Expires: time.Now().Add(365 * 24 * time.Hour),
 		})
 		ResponseWithJSON(res, []byte(`{"Result": "OK"}`), http.StatusOK)
 	} else {
@@ -108,14 +110,43 @@ func Login(res http.ResponseWriter, req *http.Request) {
 	}
 }
 
-func IsLoggedIn(res http.ResponseWriter, req *http.Request) {
-	s, _ := sessions.Start(res, req, false)
-	tokenString := s.Get("session_token", nil)
-	tokenString_c, _ := req.Cookie("session_token")
+func Logout(res http.ResponseWriter, req *http.Request) {
+	if (s == nil) {
+		s, _ = sessions.Start(res, req, true)
+	}
+
+	fmt.Println("[", req.Method, "] backend url", req.URL.Path)
+
+	s.Delete("session_token")
+	http.SetCookie(res, &http.Cookie{
+		Name:    "session_token",
+		Value:   "",
+		Path:  	 "/",
+		Expires: time.Now().Add(-365 * 24 * time.Hour),
+	})
+
+	ResponseWithJSON(res, []byte(`{"Result": "OK"}`), http.StatusOK)
+}
+
+func IsLoggedIn(res http.ResponseWriter, req *http.Request) bool {
+	if (s == nil) {
+		s, _ = sessions.Start(res, req, true)
+	}
+	fmt.Println("[", req.Method, "] isLoggedIn url", req.URL.Path)
+
+	var tokenString interface {}
+
+	tokenString = s.Get("session_token", tokenString)
+	tokenString_c, err := req.Cookie("session_token")
+
+	if (err != nil || tokenString == nil){
+		fmt.Println(err)
+		return false
+	}
 
 	if (tokenString == string(tokenString_c.Value)) {
-		ResponseWithJSON(res, []byte(`{"Result": "OK"}`), http.StatusOK)
+		return true
 	} else {
-		ResponseWithJSON(res, []byte(`{"Result": "Error"}`), http.StatusOK)
+		return false
 	}
 }
