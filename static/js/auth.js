@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  
+
   $('#LoginSubmit').click(function(event) {
     event.preventDefault();
 
@@ -24,6 +24,7 @@ $(document).ready(function() {
       stopLoader();
       if (response["Result"] == "OK") {
         // redirect
+        window.location.href = URL + "/auth/hi";
       } else {
         displayPopUp('Please try different username');
       }

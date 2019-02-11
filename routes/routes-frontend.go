@@ -31,6 +31,9 @@ func FrontEndRoutes(r *mux.Router) {
 }
 
 func serveTemplate(res http.ResponseWriter, req *http.Request) {
+  passMap := make(map[string]string)
+  passMap["URL"] = string(req.Host)
+
   fmt.Println("[", req.Method, "] frontend url", req.URL.Path)
   lp := filepath.Join("templates", "layout.html")
   var fp string
@@ -104,7 +107,7 @@ func serveTemplate(res http.ResponseWriter, req *http.Request) {
     )
   }
 
-  if err := tmpl.ExecuteTemplate(res, "layout", nil); err != nil {
+  if err := tmpl.ExecuteTemplate(res, "layout", passMap); err != nil {
     log.Println(err.Error())
     http.Error(res, http.StatusText(500), 500)
   }
