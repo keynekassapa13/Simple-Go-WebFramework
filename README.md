@@ -1,6 +1,7 @@
 # SimpleGoWebFramework
 a simple golang web app framework with a very simple authentication system.
-The database use NoSQL MongoDB.
+
+The database used is NoSQL MongoDB.
 
 Client --> API --> Database
 
