@@ -149,6 +149,7 @@ func CheckPasswordHash(password, hash string) bool {
 
 func Login(user User) string {
   user_auth := findUserByUsername(user.Username)
+
   if (CheckPasswordHash(user.Password, user_auth.Password)) {
     fmt.Println("CheckPasswordHash yes")
     token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{

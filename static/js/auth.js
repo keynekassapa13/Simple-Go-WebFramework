@@ -1,5 +1,10 @@
 $(document).ready(function() {
 
+  $('#LogoutButton').click(function(event) {
+    event.preventDefault();
+    console.log('hey');
+  })
+
   $('#LoginSubmit').click(function(event) {
     event.preventDefault();
 

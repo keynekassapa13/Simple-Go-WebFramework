@@ -139,8 +139,8 @@ func IsLoggedIn(res http.ResponseWriter, req *http.Request) bool {
 	tokenString = s.Get("session_token", tokenString)
 	tokenString_c, err := req.Cookie("session_token")
 
-	if (err != nil || tokenString == nil){
-		fmt.Println(err)
+	if (err != nil || tokenString == nil) {
+		fmt.Println("[ ERR ] IsLoggedIn", err)
 		return false
 	}
 
