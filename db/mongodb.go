@@ -2,8 +2,6 @@ package db
 
 import (
   "fmt"
-  // "log"
-  // "reflect"
 
   "gopkg.in/mgo.v2"
 )
@@ -14,6 +12,7 @@ func DeclareDb() {
   if err != nil {
           panic(err)
   }
+
   fmt.Println("[ DB ] Database is ready")
 
   session.SetMode(mgo.Monotonic, true)

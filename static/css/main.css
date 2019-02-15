@@ -1,0 +1,178 @@
+
+.fill-viewport {min-height: 100vh}
+.fill-20-viewport {min-height: 20vh}
+.fill-50-viewport {min-height: 50vh}
+.fill-60-viewport {min-height: 60vh}
+.fill-80-viewport {min-height: 80vh}
+.fill-90-viewport {min-height: 90vh}
+.text-center { text-align: center;}
+.text-italic { font-style: italic;}
+.text-semibold {font-weight: 600}
+.text-bold {font-weight: 700}
+.text-thin {font-weight: 300}
+
+.space-1 {letter-spacing: 1px; }
+.space-2 {letter-spacing: 2px; }
+.space-3 {letter-spacing: 3px; }
+
+.text-up {text-transform: uppercase;}
+.font-80 {font-size: 80%}
+.font-90 {font-size: 90%}
+.font-300 {font-size: 300%}
+.font-120 {font-size: 120%}
+.font-100 {font-size: 100%}
+.line-100 {line-height: 100%}
+
+.align-right {text-align: right;}
+.align-left {text-align: left;}
+.align-middle {text-align: center !important;}
+
+.disp-inline {display: inline;}
+
+.font-la { font-family: 'Lato', sans-serif !important; }
+.font-qu { font-family: 'Quicksand', sans-serif !important; }
+.font-mw { font-family: 'Merriweather', serif; }
+
+.pre-white-space { white-space:pre }
+.zero-opacity { opacity: 0}
+
+.color-white {color: white;}
+.petite-caps {font-variant: all-petite-caps}
+
+.btn-custom-1 {
+  width: 100%;
+  background: #c51f5d;
+  color: white;
+}
+
+.btn-custom-1:hover {
+  background: rgba(197, 31, 93, 0.8);
+  color: white;
+}
+
+.input-custom-1 {
+  background: inherit !important;
+}
+
+.form-control:focus {
+  box-shadow: 0 0 0 0;
+  border-color: inherit;
+  color: white;
+}
+
+.form-control {
+  color: white;
+}
+
+.loader-window {
+  background: rgba(20,29,38, 0.8);
+  width: 100% !important;
+  height: 100% !important;
+  position: fixed;
+  z-index: 1;
+}
+
+.loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #c51f5d;
+  top: 50%;
+  left: 50%;
+  margin-top: -60px;
+  margin-left: -60px;
+  position: relative;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ------------------------------- Index Page ------------------------------ */
+
+.child-center {
+  position: absolute !important;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding-bottom: 5%;
+}
+
+.index .col-md-6 {
+  text-align: center;
+}
+
+.index .title,
+.signup .title,
+.login .title {
+  border-bottom: 3px solid #c51f5d;
+  line-height: 150%;
+}
+
+.index .col-md-6 a {
+  text-decoration: none;
+  color: white;
+}
+
+.index .col-md-6 a:hover {
+  color: #c51f5d;
+}
+
+.index .author {
+  margin-top: 20%;
+  font-size: 70%;
+  color: grey;
+}
+
+.index .author a {
+  text-decoration: none;
+  color: #c51f5d;
+}
+
+/* --------------------------- Login & Signup Page -------------------------- */
+
+.signup,
+.login {
+  width: 35%;
+}
+
+/* ---------------------------- Hello World Page ---------------------------- */
+
+#LogoutButton:hover {
+  cursor: pointer;
+}
+
+body {
+  height: 100% !important;
+  width: 100% !important;
+  min-height: 100%;
+  min-width: 100%;
+  font-family: 'Roboto', sans-serif;
+  background: #243447;
+  color: white;
+}
+
+@media (max-width: 575.98px) {
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+}
+
+@media (min-width: 1200px) {
+}

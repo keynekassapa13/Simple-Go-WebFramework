@@ -4,8 +4,27 @@
 
 {{define "body"}}
 
-  <div class="container">
-    <h1>Login</h1>
+  <div class="login child-center">
+    <a href="../" class="color-white text-80 petite-caps">back to home</a>
+    <h1 class="title mb-4 mt-3">Login</h1>
+
+    <form>
+      <div class="form-group">
+        <label for="InputUsername">Email username</label>
+        <input class="form-control input-custom-1" id="InputUsername" placeholder="Enter username">
+      </div>
+      <div class="form-group">
+        <label for="InputPassword">Password</label>
+        <input type="password" class="form-control input-custom-1" id="InputPassword" placeholder="Password">
+      </div>
+      <button id="LoginSubmit" class="btn btn-custom-1">Submit</button>
+    </form>
+
+    <button id="TestSubmit" class="btn btn-primary">Test</button>
+
   </div>
+
+  <script src="http://{{.URL}}/static/js/main.js"></script>
+  <script src="http://{{.URL}}/static/js/auth.js"></script>
 
 {{end}}
