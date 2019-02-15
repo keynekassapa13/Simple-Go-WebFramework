@@ -146,7 +146,11 @@
   width: 35%;
 }
 
+/* ---------------------------- Hello World Page ---------------------------- */
 
+#LogoutButton:hover {
+  cursor: pointer;
+}
 
 body {
   height: 100% !important;
