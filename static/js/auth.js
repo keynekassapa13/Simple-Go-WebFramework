@@ -3,6 +3,30 @@ $(document).ready(function() {
   $('#LogoutButton').click(function(event) {
     event.preventDefault();
     console.log('hey');
+
+    addLoader();
+
+    fetch( URL + '/backend/logout', {
+      method: "GET",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(response) {
+      stopLoader();
+      if (response["Result"] == "OK") {
+        // redirect
+        console.log("OK");
+        window.location.href = URL + "";
+
+      } else {
+        displayPopUp('Cannot logout');
+      }
+    });
   })
 
   $('#LoginSubmit').click(function(event) {
